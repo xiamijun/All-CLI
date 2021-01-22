@@ -5,6 +5,7 @@ const { merge } = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin =require('terser-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 let webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -29,6 +30,7 @@ let webpackConfig = merge(baseWebpackConfig, {
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
+    new HardSourceWebpackPlugin() // 启用硬件加速
   ],
   optimization: {
     splitChunks: {

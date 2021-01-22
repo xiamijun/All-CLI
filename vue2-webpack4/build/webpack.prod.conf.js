@@ -10,6 +10,7 @@ const baseWebpackConfig = require('./webpack.base.conf');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const env = process.env.NODE_ENV === 'testing' ? require('../config/test.env') : require('../config/prod.env');
 
 let webpackConfig = merge(baseWebpackConfig, {
@@ -39,7 +40,8 @@ let webpackConfig = merge(baseWebpackConfig, {
       cssProcessorOptions: config.build.productionSourceMap ? { safe: true, map: { inline: false } } : { safe: true }
     }),
     // keep module.id stable when vender modules does not change
-    new webpack.HashedModuleIdsPlugin()
+    new webpack.HashedModuleIdsPlugin(),
+    new HardSourceWebpackPlugin() // 启用硬件加速
   ],
   optimization: {
     splitChunks: {
